@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+
 import { Grid, Paper, IconButton, Typography, Stack, Tooltip, } from "@mui/material";
 import { styled, createTheme } from "@mui/system";
 import { grey, blue } from '@mui/material/colors';
 import InfoIcon from '@mui/icons-material/Info';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
+
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: blue[700],
@@ -34,13 +37,17 @@ export default function ClassInfo({ role, className, section, subject, room, inv
   const [showDetails, setShowDetails] = useState(false);
   const [copy, setCopy] = useState(false);
   const theme = createTheme();
+  const location = window.location.href.split('/classes')[0];
+
+
 
   const handleShowDetails = () => {
     setShowDetails(!showDetails);
   }
 
-  const handleCopyClassCode = () => {
-    navigator.clipboard.writeText(inviteCode);
+  const handleCopyClassCode = (location) => {
+
+    navigator.clipboard.writeText(location + `/join/${inviteCode}`);
     setCopy(true);
   }
 
@@ -92,11 +99,20 @@ export default function ClassInfo({ role, className, section, subject, room, inv
         <Grid item xs={12}>
           <Typography variant="h4">{className}</Typography>
           <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography variant="h6"><b>Class code:</b> {inviteCode}</Typography>
+            <Typography
+              display = "block"
+              width = "250px"
+              variant="h6"
+              noWrap
+              overflow="hidden"
+              text-overflow="ellipsis"
+            >
+              <b>Class code:</b> {location + `/join/${inviteCode}`}
+            </Typography>
             <Tooltip title={copy ? "Copied!" : "Click to copy"}>
               <IconButton
                 sx={{ color: grey[50] }}
-                onClick={handleCopyClassCode}
+                onClick={()=>handleCopyClassCode(location)}
                 onMouseLeave={handleResetCopyState}
               >
                 <ContentCopyIcon />

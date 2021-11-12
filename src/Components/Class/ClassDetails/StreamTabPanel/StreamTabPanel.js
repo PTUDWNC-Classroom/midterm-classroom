@@ -16,7 +16,7 @@ export default function StreamTabPanel({ value, index }) {
   const [classInfo, setClassInfo] = useState({});
   const { handleClassDetails } = React.useContext(tabsContext);
   let location = useLocation();
-
+  
   useEffect(() => {
     const fetchClassDetail = async () => {
       try {
@@ -34,6 +34,7 @@ export default function StreamTabPanel({ value, index }) {
     // eslint-disable-next-line 
   }, []);
 
+  console.log(classInfo);
   return (
     <TabPanel value={value} index={index}>
       <Container>

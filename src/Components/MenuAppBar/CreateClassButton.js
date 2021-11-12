@@ -74,11 +74,18 @@ export default function CreateClassButton({ handleRender }) {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_HOST}classes`, {
+      // const response = await axios.post(`${process.env.REACT_APP_HOST}classes`, {
+      //   className: data.className,
+      //   section: data.section,
+      //   subject: data.subject,
+      //   room: data.room,
+      // });
+
+      const response = await axios.post("http://localhost:3000/classes", {
         className: data.className,
         section: data.section,
         subject: data.subject,
-        room: data.room,
+        room: data.room
       });
 
       handleRender(response.data);

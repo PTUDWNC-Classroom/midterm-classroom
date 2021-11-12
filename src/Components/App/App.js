@@ -13,6 +13,7 @@ import Homepage from '../Homepage/Homepage';
 import MenuAppBar from "../MenuAppBar/MenuAppBar";
 import TabsProvider from "../../context/TabsContext";
 import ClassDetails from "../Class/ClassDetails/ClassDetails";
+import ClassJoin from "../Class/ClassJoin/ClassJoin";
 
 const StyledContainer = styled(Container)(({theme}) => ({
   marginTop: theme.spacing(3),
@@ -30,6 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage newClassId={newClassId} />} />
             <Route path="/classes/*" element={<ClassDetails />} />
+            <Route path="/join/*" element={<ClassJoin />}/>
           </Routes>
         </StyledContainer>
       </TabsProvider>

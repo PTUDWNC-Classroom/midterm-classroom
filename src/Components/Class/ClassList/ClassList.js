@@ -25,8 +25,8 @@ const ClassList = ({ newClassId }) => {
   useEffect(() => {
     const getClassList = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_HOST}classes`);
-
+        //const response = await axios.get(`${process.env.REACT_APP_HOST}classes`);
+        const response = await axios.get("http://localhost:3000/classes");
         if (response) {
           setIsLoaded(true);
           setItems(response.data);
@@ -40,6 +40,10 @@ const ClassList = ({ newClassId }) => {
 
     getClassList();
   }, [newClassId]);
+
+  
+
+
 
   if (error) {
     return <Typography variant="h4" color="error" align="center" flexGrow={1}>Error: {error.message}</Typography>;

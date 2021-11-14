@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import { Grid, Paper, IconButton, Typography, Stack, Tooltip, } from "@mui/material";
-import { styled, createTheme } from "@mui/system";
+import { styled } from "@mui/system";
 import { grey, blue } from '@mui/material/colors';
 import InfoIcon from '@mui/icons-material/Info';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { useTheme } from '@mui/material/styles';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: blue[700],
@@ -18,13 +19,19 @@ const InfoGrid = styled(Grid)(({ theme }) => ({
   borderRadius: "0 0 4px 4px"
 }));
 
+const StyledTypography = styled(Typography)`
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
 const ShowDetail = ({ subject, room }) => {
-  const theme = createTheme();
+  const theme = useTheme();
 
   return (
     <InfoGrid item xs style={{ padding: theme.spacing(3) }}>
-      {subject && <Typography variant="body1"><b>Topic: </b>{subject}</Typography>}
-      {room && <Typography variant="body1"><b>Room:</b> {room}</Typography>}
+      {subject && <StyledTypography variant="body1"><b>Topic: </b>{subject}</StyledTypography>}
+      {room && <StyledTypography variant="body1"><b>Room:</b> {room}</StyledTypography>}
     </InfoGrid>
   )
 }
@@ -33,7 +40,7 @@ export default function ClassInfo({ role, className, section, subject, room, inv
   const [showInfoBtn, setShowInfoBtn] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [copy, setCopy] = useState(false);
-  const theme = createTheme();
+  const theme = useTheme();
 
   const handleShowDetails = () => {
     setShowDetails(!showDetails);
@@ -54,22 +61,21 @@ export default function ClassInfo({ role, className, section, subject, room, inv
     }
   }, [subject, room]);
 
-  if (role === "creator") {
+  if (role === "member") {
     return (
       <StyledPaper elevation={6}>
         <Grid
           container
-          justifyContent="space-around"
           alignItems="flex-end"
-          style={{ height: 180, padding: theme.spacing(3) }}
+          style={{ minHeight: 180, padding: theme.spacing(3) }}
         >
-          <Grid item xs>
-            <Typography variant="h4">{className}</Typography>
-            <Typography variant="h6">{section}</Typography>
+          <Grid item xs={11}>
+            <StyledTypography variant="h4">{className}</StyledTypography>
+            <StyledTypography variant="h6">{section}</StyledTypography>
           </Grid>
 
           {showInfoBtn && (
-            <Grid item>
+            <Grid container item xs={1} justifyContent="flex-end">
               <Tooltip title="View class information">
                 <IconButton aria-label="display topic and room" onClick={handleShowDetails}>
                   <InfoIcon sx={{ color: grey[50] }} />
@@ -86,11 +92,11 @@ export default function ClassInfo({ role, className, section, subject, room, inv
       <Grid
         container
         alignItems="flex-start"
-        style={{ height: 180, padding: theme.spacing(3) }}
+        style={{ minHeight: 180, padding: theme.spacing(3) }}
         direction="row"
       >
         <Grid item xs={12}>
-          <Typography variant="h4">{className}</Typography>
+          <StyledTypography variant="h4">{className}</StyledTypography>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography variant="h6"><b>Class code:</b> {inviteCode}</Typography>
             <Tooltip title={copy ? "Copied!" : "Click to copy"}>

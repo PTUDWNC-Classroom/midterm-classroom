@@ -8,7 +8,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   border: `1px solid ${grey[300]}`,
 }));
 
-export default function StreamTabPanel({ avatar }) {
+export default function ClassAnnounment({ avatar }) {
   return (
     <StyledPaper >
       <Stack direction="row" alignItems="center" spacing={2} >

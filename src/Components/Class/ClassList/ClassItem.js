@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Paper, IconButton, Typography } from "@mui/material";
+import { Grid, Paper, IconButton, Typography, Tooltip } from "@mui/material";
 import { styled } from "@mui/system";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -44,9 +44,11 @@ export default function ClassItem({ id, className, section, memberTotal, handleC
           <Grid container item xs={10} minHeight="60px">
             <StyledLinkRR to={`/classes/${id}`}>
               <Grid item xs={12}>
-                <Typography variant="h6" noWrap textAlign="left">
-                  {className}
-                </Typography>
+                <Tooltip title={className}>
+                  <Typography variant="h6" noWrap textAlign="left">
+                    {className}
+                  </Typography>
+                </Tooltip>
               </Grid>
               <Grid item>
                 <Typography variant="body1" noWrap textAlign="left">

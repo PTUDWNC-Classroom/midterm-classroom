@@ -4,18 +4,21 @@ import { useLocation } from 'react-router';
 
 import { Grid, Container } from "@mui/material";
 
-import ClassTopic from '../ClassTopic';
+import ClassTopic from './ClassTopic';
 import TabPanel from '../TabPanel';
 import ClassInfo from "./ClassInfo";
 import UpcommingTask from "./UpcommingTask";
 import ClassAnnoucement from './ClassAnnounment';
 import { tabsContext } from '../../../../context/TabsContext';
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function StreamTabPanel({ value, index }) {
   const [classInfo, setClassInfo] = useState({});
   const { handleClassDetails } = React.useContext(tabsContext);
   let location = useLocation();
+  const theme = useTheme();
+  const matchUpMD = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
     const fetchClassDetail = async () => {
@@ -40,7 +43,7 @@ export default function StreamTabPanel({ value, index }) {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <ClassInfo
-              role="creatpr"
+              role="creator"
               className={classInfo.className}
               section={classInfo.section}
               subject={classInfo.subject}
@@ -49,9 +52,9 @@ export default function StreamTabPanel({ value, index }) {
             />
           </Grid>
 
-          <Grid item xs={3}>
+          {matchUpMD && <Grid item xs={3}>
             <UpcommingTask />
-          </Grid>
+          </Grid>}
 
           <Grid container item md={9} sm={12} spacing={3}>
             <Grid item xs={12}>

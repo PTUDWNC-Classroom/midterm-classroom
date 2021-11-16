@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
-import MenuAppBar from '../MenuAppBar/MenuAppBar';
-import Container from '@mui/material/Container';
+import React from 'react';
 
-import ClassList from '../Class/ClassList';
+import ClassList from '../Class/ClassList/ClassList';
 
-export default function Homepage() {
-  const [newClassId, setNewClassId] = useState('');
+export default function Homepage({newClassId}) {
 
-  return (<>
-    <MenuAppBar handleRender={setNewClassId} />
-    <Container maxWidth={false}>
+  return (
       <ClassList newClassId={newClassId} />
-    </Container>
-  </>)
+  )
 }

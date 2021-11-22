@@ -23,7 +23,9 @@ export default function StreamTabPanel({ value, index }) {
   useEffect(() => {
     const fetchClassDetail = async () => {
       try {
-        const res = await axios.get("http://localhost:3000" + location.pathname)
+        const res = await axios.get(
+          process.env.REACT_APP_HOST + location.pathname.replace("/", "")
+        )
         setClassInfo(res.data)
         handleClassDetails(res.data)
         document.title = res.data.className

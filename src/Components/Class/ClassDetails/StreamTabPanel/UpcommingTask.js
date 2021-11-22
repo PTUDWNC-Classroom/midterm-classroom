@@ -1,13 +1,13 @@
-import React from "react";
+import React from "react"
 
-import { Grid, Paper, Typography, Button } from "@mui/material";
-import { styled } from "@mui/system";
-import { grey } from '@mui/material/colors';
+import { Grid, Paper, Typography, Button } from "@mui/material"
+import { styled } from "@mui/system"
+import { grey } from "@mui/material/colors"
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   border: `1px solid ${grey[300]}`,
-}));
+}))
 
 const ViewAllButton = styled(Button)`
   padding: 0;
@@ -16,13 +16,11 @@ const ViewAllButton = styled(Button)`
 export default function UpcommingTask() {
   return (
     <StyledPaper elevation={0}>
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-      >
+      <Grid container direction="column" justifyContent="center">
         <Grid item xs={12}>
-          <Typography variant="body1"><b>Upcomming</b></Typography>
+          <Typography variant="body1">
+            <b>Upcomming</b>
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body2">No work due soon</Typography>
@@ -32,5 +30,5 @@ export default function UpcommingTask() {
         </Grid>
       </Grid>
     </StyledPaper>
-  );
+  )
 }

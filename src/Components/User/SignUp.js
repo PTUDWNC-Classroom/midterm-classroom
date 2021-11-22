@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +10,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 
 import sendUserInfoSignUp from '../DataConnection/SignUpHandler';
 
@@ -30,41 +32,49 @@ const theme = createTheme();
 
 export default function SignUp() {
 
-  const handleOnchange = (event) =>{
-    var email = event.target.value;
-        var filter = /^([\w\\.])+@([a-zA-Z0-9\\-])+\.([a-zA-Z]{2,4})(\.[a-zA-Z]{2,4})?$/;
-        if (!filter.test(email.value)) {
-            console.log("false");
-            return false;
-        }
-        else {
-          console.log("true");
-            return true;
-        }
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorUserName, setErrorUserName] = useState(null);
+  const [errorPassword, setErrorPassword] = useState(null);
+
+  const handleError = (error)=>
+  {
+    let email = error.email;
+    let username = error.username;
+    let password = error.password; 
+    
+    setErrorEmail(!email.match(/.+@.+/));
+    setErrorUserName((username!=="")? false:true )
+    setErrorPassword((password!=="")? false:true )
+
+    if (errorEmail===false&&errorUserName===false&&errorPassword===false)
+    {
+      return false;
+    }
+    return true;
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    //   confirm_password: data.get('confirm-password'),
-    //   userName: data.get('userName')
-    // });
+   
+      const data = new FormData(event.currentTarget);
 
-    const userInfo =
-    {
-      email: data.get('email'),
-      password: data.get('password'),
-      username: data.get('username')
-    };
-
-
-
-    sendUserInfoSignUp(userInfo);
-
+      const userInfo =
+      {
+        email: data.get('email'),
+        password: data.get('password'),
+        username: data.get('username')
+      };
+  
+  
+  
+      //sendUserInfoSignUp(userInfo);
+    
+      console.log(handleError(userInfo));
+      if(handleError(userInfo)===false)
+      {
+        sendUserInfoSignUp(userInfo);
+      }
+     
   };
 
   return (
@@ -90,45 +100,39 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   required
-                  error
+                  error={errorEmail}
                   fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  onChange={handleOnchange}
-                  helperText=""
+                  //onChange={handleOnchange}
+                  helperText={errorEmail? 'Nhập email sai format!' : ' '}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
+                  error={errorUserName}
                   id="username"
                   label="User Name"
                   name="username"
                   autoComplete="username"
+                  helperText={errorUserName? 'Không thể bỏ trống' : ' '}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
+                  error={errorPassword}
                   fullWidth
                   name="password"
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirm-password"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirm-password"
+                  autoComplete="password"
+                  helperText={errorPassword? 'Không thể bỏ trống' : ' '}
                 />
               </Grid>
             </Grid>

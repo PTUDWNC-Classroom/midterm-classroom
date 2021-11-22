@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { GoogleLogin } from 'react-google-login';
-import { useHistory} from 'react-router';
+import { GoogleButton } from 'react-google-button'
+import { useHistory } from 'react-router';
 
 
 
@@ -33,14 +34,22 @@ function SocialLogin() {
         >
             <GoogleLogin
                 clientId={clientId}
-                buttonText="Login"
+                render={renderProps => (
+                    <GoogleButton onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                       
+                        style={{ width: 396 }}
+                    >
+                        Sign in with Google</GoogleButton>
+                )
+                }
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 style={{ marginTop: '100px' }}
                 isSignedIn={true}
             />
 
-        </div>
+        </div >
     );
 }
 

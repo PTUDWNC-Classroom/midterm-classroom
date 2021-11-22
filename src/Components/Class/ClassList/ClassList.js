@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
 
+
 import axios from "axios";
 
 import ClassItem from "./ClassItem";
@@ -27,7 +28,7 @@ const ClassList = ({ newClassId }) => {
     const getClassList = async () => {
       try {
         //const response = await axios.get(`${process.env.REACT_APP_HOST}classes`);
-        const response = await axios.get("http://localhost:3000/classes");
+        const response = await axios.get(`${process.env.REACT_APP_HOST}classes`);
         if (response) {
           setIsLoaded(true);
           setItems(response.data);

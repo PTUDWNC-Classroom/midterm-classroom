@@ -47,7 +47,7 @@ function App() {
         <StyledContainer maxWidth="xl">
           <Switch>
             <Route exact path="/" render={() => {
-              const isLogin = sessionStorage.getItem('isSocialLogin');
+              const isLogin = (sessionStorage.getItem('isSocialLogin')||sessionStorage.getItem('isLogin'));
               console.log(isLogin);
               return isLogin ? <Homepage newClassId={newClassId} /> : <Redirect to="/sign-in" />;
             }}

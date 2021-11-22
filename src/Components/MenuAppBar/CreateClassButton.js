@@ -34,7 +34,7 @@ export default function CreateClassButton({ handleRender }) {
   const [openCreateClass, setOpenCreateClass] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
-  
+
   let location = useLocation();
   const pathArr = location.pathname.split("/");
 
@@ -110,7 +110,7 @@ export default function CreateClassButton({ handleRender }) {
     }
   }, [formState, reset, error]);
 
-  
+
 
   if (pathArr[1] !== "") {
     return null;

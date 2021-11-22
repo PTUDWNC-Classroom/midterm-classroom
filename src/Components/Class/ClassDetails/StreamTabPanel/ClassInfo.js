@@ -1,84 +1,110 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 
-
-import { Grid, Paper, IconButton, Typography, Stack, Tooltip, } from "@mui/material";
-import { styled, createTheme } from "@mui/system";
-import { grey, blue } from '@mui/material/colors';
-import InfoIcon from '@mui/icons-material/Info';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-
-
+import {
+  Grid,
+  Paper,
+  IconButton,
+  Typography,
+  Stack,
+  Tooltip,
+} from "@mui/material"
+import { styled } from "@mui/system"
+import { grey, blue } from "@mui/material/colors"
+import InfoIcon from "@mui/icons-material/Info"
+import ContentCopyIcon from "@mui/icons-material/ContentCopy"
+import { useTheme } from "@mui/material/styles"
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: blue[700],
   color: grey[50],
-}));
+}))
 
 const InfoGrid = styled(Grid)(({ theme }) => ({
   backgroundColor: "#fff",
   color: "#000",
   padding: theme.spacing(3),
-  borderRadius: "0 0 4px 4px"
-}));
+  borderRadius: "0 0 4px 4px",
+}))
+
+const StyledTypography = styled(Typography)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
 
 const ShowDetail = ({ subject, room }) => {
-  const theme = createTheme();
+  const theme = useTheme()
 
   return (
     <InfoGrid item xs style={{ padding: theme.spacing(3) }}>
-      {subject && <Typography variant="body1"><b>Topic: </b>{subject}</Typography>}
-      {room && <Typography variant="body1"><b>Room:</b> {room}</Typography>}
+      {subject && (
+        <StyledTypography variant="body1">
+          <b>Topic: </b>
+          {subject}
+        </StyledTypography>
+      )}
+      {room && (
+        <StyledTypography variant="body1">
+          <b>Room:</b> {room}
+        </StyledTypography>
+      )}
     </InfoGrid>
   )
 }
 
-export default function ClassInfo({ role, className, section, subject, room, inviteCode }) {
-  const [showInfoBtn, setShowInfoBtn] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
-  const [copy, setCopy] = useState(false);
-  const theme = createTheme();
-  const location = window.location.href.split('/classes')[0];
-
-
+export default function ClassInfo({
+  role,
+  className,
+  section,
+  subject,
+  room,
+  inviteCode,
+}) {
+  const [showInfoBtn, setShowInfoBtn] = useState(false)
+  const [showDetails, setShowDetails] = useState(false)
+  const [copy, setCopy] = useState(false)
+  const location = window.location.href.split("/classes")[0]
+  const theme = useTheme()
 
   const handleShowDetails = () => {
-    setShowDetails(!showDetails);
+    setShowDetails(!showDetails)
   }
 
   const handleCopyClassCode = (location) => {
-
-    navigator.clipboard.writeText(location + `/join/${inviteCode}`);
-    setCopy(true);
+    navigator.clipboard.writeText(location + `/join/${inviteCode}`)
+    setCopy(true)
   }
 
   const handleResetCopyState = () => {
-    setCopy(false);
+    setCopy(false)
   }
 
   useEffect(() => {
     if (subject || room) {
-      setShowInfoBtn(true);
+      setShowInfoBtn(true)
     }
-  }, [subject, room]);
+  }, [subject, room])
 
-  if (role === "creator") {
+  if (role === "member") {
     return (
       <StyledPaper elevation={6}>
         <Grid
           container
-          justifyContent="space-around"
           alignItems="flex-end"
-          style={{ height: 180, padding: theme.spacing(3) }}
+          style={{ minHeight: 180, padding: theme.spacing(3) }}
         >
-          <Grid item xs>
-            <Typography variant="h4">{className}</Typography>
-            <Typography variant="h6">{section}</Typography>
+          <Grid item xs={11}>
+            <StyledTypography variant="h4">{className}</StyledTypography>
+            <StyledTypography variant="h6">{section}</StyledTypography>
           </Grid>
 
           {showInfoBtn && (
-            <Grid item>
+            <Grid container item xs={1} justifyContent="flex-end">
               <Tooltip title="View class information">
-                <IconButton aria-label="display topic and room" onClick={handleShowDetails}>
+                <IconButton
+                  aria-label="display topic and room"
+                  onClick={handleShowDetails}
+                >
                   <InfoIcon sx={{ color: grey[50] }} />
                 </IconButton>
               </Tooltip>
@@ -87,40 +113,41 @@ export default function ClassInfo({ role, className, section, subject, room, inv
         </Grid>
         {showDetails && <ShowDetail subject={subject} room={room} />}
       </StyledPaper>
-    );
-  } else return (
-    <StyledPaper elevation={6}>
-      <Grid
-        container
-        alignItems="flex-start"
-        style={{ height: 180, padding: theme.spacing(3) }}
-        direction="row"
-      >
-        <Grid item xs={12}>
-          <Typography variant="h4">{className}</Typography>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography
-              display = "block"
-              width = "250px"
-              variant="h6"
-              noWrap
-              overflow="hidden"
-              text-overflow="ellipsis"
-            >
-              <b>Class code:</b> {location + `/join/${inviteCode}`}
-            </Typography>
-            <Tooltip title={copy ? "Copied!" : "Click to copy"}>
-              <IconButton
-                sx={{ color: grey[50] }}
-                onClick={()=>handleCopyClassCode(location)}
-                onMouseLeave={handleResetCopyState}
+    )
+  } else
+    return (
+      <StyledPaper elevation={6}>
+        <Grid
+          container
+          alignItems="flex-start"
+          style={{ minHeight: 180, padding: theme.spacing(3) }}
+          direction="row"
+        >
+          <Grid item xs={12}>
+            <StyledTypography variant="h4">{className}</StyledTypography>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Typography
+                display="block"
+                width="250px"
+                variant="h6"
+                noWrap
+                overflow="hidden"
+                text-overflow="ellipsis"
               >
-                <ContentCopyIcon />
-              </IconButton>
-            </Tooltip>
-          </Stack>
+                <b>Class code:</b> {location + `/join/${inviteCode}`}
+              </Typography>
+              <Tooltip title={copy ? "Copied!" : "Click to copy"}>
+                <IconButton
+                  sx={{ color: grey[50] }}
+                  onClick={() => handleCopyClassCode(location)}
+                  onMouseLeave={handleResetCopyState}
+                >
+                  <ContentCopyIcon />
+                </IconButton>
+              </Tooltip>
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
-    </StyledPaper>
-  );
+      </StyledPaper>
+    )
 }

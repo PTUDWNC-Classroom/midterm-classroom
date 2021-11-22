@@ -7,9 +7,6 @@ import { grey } from '@mui/material/colors';
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   border: `1px solid ${grey[300]}`,
-  [theme.breakpoints.down('md')]: {
-      display: 'none',
-  },
 }));
 
 const ViewAllButton = styled(Button)`

@@ -1,69 +1,68 @@
-import * as React from 'react';
-import { Link as LinkRR } from 'react-router-dom';
-import {useLocation} from 'react-router'
+import * as React from "react"
+import { Link as LinkRR } from "react-router-dom"
+import { useLocation } from "react-router"
 
-import { styled } from "@mui/system";
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import { Button } from '@mui/material';
-import { blue, grey } from '@mui/material/colors';
+import { styled } from "@mui/system"
+import CssBaseline from "@mui/material/CssBaseline"
+import Box from "@mui/material/Box"
+import Container from "@mui/material/Container"
+import AccountBoxIcon from "@mui/icons-material/AccountBox"
+import { Button } from "@mui/material"
+import { grey } from "@mui/material/colors"
 
 const StyledLinkRR = styled(LinkRR)(({ theme }) => ({
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    paddingTop: 0.5,
-    color: grey[50],
-    textDecoration: "none",
-    '&:hover': {
-        textDecoration: "underline",
-    }
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  paddingTop: 0.5,
+  color: grey[50],
+  textDecoration: "none",
+  "&:hover": {
+    textDecoration: "underline",
+  },
 }))
 //import Grid from '@mui/icons-material/Grid3x3Sharp'
 
 export default function ClassJoin() {
-    let location = useLocation();
-    console.log(location.pathname);
-    const str = location.pathname.split('/');
-    // use bcrypt
-    const id= str[str.length - 1];
+  let location = useLocation()
+  console.log(location.pathname)
+  const str = location.pathname.split("/")
+  // use bcrypt
+  const id = str[str.length - 1]
 
-    function handleJoinClass() {
-        //getAccount function
-
-
-    }
-    return (
-        <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="sm">
-                <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    minHeight="20vh"
-                    sx={{ bgcolor: '#6efcfc', height: '20vh' }}
-                    color="blue"
-                >
-                    <AccountBoxIcon
-                        sx={{
-                            fontSize: 50
-                        }}
-                    />
-                </Box>
-                <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{ bgcolor: '#F0F8FF', height: '60vh' }}>
-                    <StyledLinkRR to={`/classes/${id}`}>
-                        <Button variant="contained" onClick={handleJoinClass}>
-                            JOIN CLASS
-                        </Button>
-                    </StyledLinkRR>
-                </Box>
-            </Container>
-        </React.Fragment>
-    );
+  function handleJoinClass() {
+    //getAccount function
+  }
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="20vh"
+          sx={{ bgcolor: "#6efcfc", height: "20vh" }}
+          color="blue"
+        >
+          <AccountBoxIcon
+            sx={{
+              fontSize: 50,
+            }}
+          />
+        </Box>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ bgcolor: "#F0F8FF", height: "60vh" }}
+        >
+          <StyledLinkRR to={`/classes/${id}`}>
+            <Button variant="contained" onClick={handleJoinClass}>
+              JOIN CLASS
+            </Button>
+          </StyledLinkRR>
+        </Box>
+      </Container>
+    </React.Fragment>
+  )
 }

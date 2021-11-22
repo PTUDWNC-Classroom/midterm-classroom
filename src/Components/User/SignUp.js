@@ -29,6 +29,20 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+
+  const handleOnchange = (event) =>{
+    var email = event.target.value;
+        var filter = /^([\w\\.])+@([a-zA-Z0-9\\-])+\.([a-zA-Z]{2,4})(\.[a-zA-Z]{2,4})?$/;
+        if (!filter.test(email.value)) {
+            console.log("false");
+            return false;
+        }
+        else {
+          console.log("true");
+            return true;
+        }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -40,17 +54,17 @@ export default function SignUp() {
     //   userName: data.get('userName')
     // });
 
-    const userInfo = 
+    const userInfo =
     {
       email: data.get('email'),
       password: data.get('password'),
       username: data.get('username')
     };
 
-    
+
 
     sendUserInfoSignUp(userInfo);
-    
+
   };
 
   return (
@@ -76,11 +90,14 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   required
+                  error
                   fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleOnchange}
+                  helperText=""
                 />
               </Grid>
               <Grid item xs={12}>

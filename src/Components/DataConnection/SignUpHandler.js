@@ -14,7 +14,7 @@ export default async function sendUserInfoSignUp(userInfo)
                   });
 
       if (response) {
-        console.log("da sign up")
+        console.log(response);
       }
     } catch (error) {
       console.error(error);

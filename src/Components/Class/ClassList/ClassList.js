@@ -6,6 +6,7 @@ import Menu from '@mui/material/Menu';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from "axios";
+
 import ClassItem from "./ClassItem";
 
 const ClassList = ({ newClassId }) => {

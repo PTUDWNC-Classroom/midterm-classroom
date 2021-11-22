@@ -44,7 +44,7 @@ const MainAppBar = ({ path }) => {
 
 export default function MenuAppBar({ handleRender }) {
   let location = useLocation();
-  const isLogin = localStorage.getItem('isLogedin');
+  const isLogin = sessionStorage.getItem('isSocialLogin');
   
   if(isLogin === undefined || isLogin === null )
   {

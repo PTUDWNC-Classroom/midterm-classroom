@@ -10,10 +10,10 @@ function SocialLogout() {
 
   let onSuccess = () => {
     
-      localStorage.removeItem('isLogedin')
+    sessionStorage.removeItem('isSocialLogin')
       console.log('Logout made successfully');
       alert('Logout made successfully ✌');
-      history.replace("/home");
+      history.replace("/");
       //window.location.reload();
   };
 

@@ -15,13 +15,13 @@ function SocialLogin() {
     const history = useHistory();
     const onSuccess = (res) => {
         alert(res.profileObj.name);
-        localStorage.setItem('isLogedin', true);
-        history.replace("/home");
+        sessionStorage.setItem('isSocialLogin', true);
+        history.replace("/");
         //window.location.reload();
     };
 
     const onFailure = (res) => {
-        localStorage.removeItem('isLogedin');
+        sessionStorage.removeItem('isSocialLogin');
         console.log('Login failed: res:', res.profileObj === undefined);
         alert(
             `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`

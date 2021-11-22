@@ -34,7 +34,7 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 // }
 
 function App() {
-  const isLogin = localStorage.getItem('isLogedin');
+  const isLogin = sessionStorage.getItem('isSocialLogin');
   console.log(isLogin);
   const [newClassId, setNewClassId] = useState('');
 
@@ -46,10 +46,10 @@ function App() {
         <MenuAppBar handleRender={setNewClassId} />
         <StyledContainer maxWidth="xl">
           <Switch>
-            <Route path="/home" render={() => {
-              const isLogin = localStorage.getItem('isLogedin');
+            <Route exact path="/" render={() => {
+              const isLogin = sessionStorage.getItem('isSocialLogin');
               console.log(isLogin);
-              return isLogin? <Homepage newClassId={newClassId} />: <Redirect to="/log-in"/>;
+              return isLogin ? <Homepage newClassId={newClassId} /> : <Redirect to="/sign-in" />;
             }}
             />
             <Route exact path="/log-in">
@@ -58,10 +58,18 @@ function App() {
             <Route exact path="/log-out">
               <SocialLogout />
             </Route>
-            <Route path="/sign-up" component={<SignUp />} />
-            <Route path="/sign-in" component={<SignIn />} />
-            <Route path="/classes/*" component={<ClassDetails />} />
-            <Route path="/join/*" component={<ClassJoin />} />
+            <Route exact path="/sign-up">
+              <SignUp />
+            </Route>
+            <Route exact path="/sign-in">
+              <SignIn />
+            </Route>
+            <Route exact path="/classes/*">
+              <ClassDetails />
+            </Route>
+            <Route exact path="/join/*">
+              <ClassJoin />
+            </Route>
           </Switch>
         </StyledContainer>
       </TabsProvider>

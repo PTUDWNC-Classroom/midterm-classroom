@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import sendUserInfoSignUp from '../DataConnection/SignUpHandler';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,10 +33,24 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    //   confirm_password: data.get('confirm-password'),
+    //   userName: data.get('userName')
+    // });
+
+    const userInfo = 
+    {
       email: data.get('email'),
       password: data.get('password'),
-    });
+      username: data.get('username')
+    };
+
+    
+
+    sendUserInfoSignUp(userInfo);
+    
   };
 
   return (
@@ -65,6 +81,16 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="User Name"
+                  name="username"
+                  autoComplete="username"
                 />
               </Grid>
               <Grid item xs={12}>

@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SocialLogin from './Social-SignIn/Google-Login-Button';
 
+import sendUserInfoSignIn from '../DataConnection/SignInHandler';
 
 
 function Copyright(props) {
@@ -37,11 +38,18 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('email'),
+      username: data.get('username'),
       password: data.get('password'),
     });
-  };
 
+    const userInfo = {
+      username: data.get('username'),
+      password: data.get('password'),
+    }
+
+    sendUserInfoSignIn(userInfo);
+  };
+  console.log("sign-in")
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -65,10 +73,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="User Name"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField

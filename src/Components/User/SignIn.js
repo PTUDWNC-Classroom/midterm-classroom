@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState} from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +15,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SocialLogin from './Social-SignIn/Google-Login-Button';
 
 import sendUserInfoSignIn from '../DataConnection/SignInHandler';
+import { Dialog, DialogContent } from '@mui/material';
+import { BasicTextFields } from './Email/Form-Email';
+import { useHistory } from 'react-router';
+//import formEmailForget from './Email/Form-Email';
+
 
 
 function Copyright(props) {
@@ -33,7 +38,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const history = useHistory();
+  const [openPopup, setOpenPopup] = useState(false);
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
@@ -46,10 +53,30 @@ export default function SignIn() {
       username: data.get('username'),
       password: data.get('password'),
     }
-
-    sendUserInfoSignIn(userInfo);
+    const user = await sendUserInfoSignIn(userInfo)
+    console.log("user")
+    console.log(user);
+    if(user!==false)
+    {
+      localStorage.setItem('isSocialLogin',JSON.stringify(user));
+      history.replace('/');
+    }
   };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    //console.log("chan ta");
+    //console.log(itemInput);
+    
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setOpenPopup(false);
+  }
+
   console.log("sign-in")
+  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -108,7 +135,11 @@ export default function SignIn() {
              
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href= "#" variant="body2" onClick={()=>
+                {
+                  console.log("set openpopup")
+                  setOpenPopup(true)
+                }}>
                   Forgot password?
                 </Link>
               </Grid>
@@ -120,6 +151,19 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
+        <Dialog open={openPopup}
+        >
+          <DialogContent>
+            <Typography>
+            <b>Nhập Email để đổi mật khẩu</b>
+            </Typography>
+            <form>
+              <BasicTextFields/>
+              <Button type="cancel" onClick={handleCancel}>Cancel</Button>
+              <Button type="submit" onClick={handleSend}>Submit</Button>
+            </form>
+          </DialogContent>
+        </Dialog>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

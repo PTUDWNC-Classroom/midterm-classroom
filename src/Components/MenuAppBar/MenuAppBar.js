@@ -16,6 +16,7 @@ import { useLocation } from "react-router-dom"
 
 import ClassDetailsTabs, { TabsManagerDownMD } from "./ClassDetailsTabs"
 import CreateClassButton from "./CreateClassButton"
+import AccountUser from "./AccountUser"
 
 const StyledAppBar = styled(AppBar)`
   background-color: ${grey[900]};
@@ -68,7 +69,7 @@ HideOnScroll.propTypes = {
 export default function MenuAppBar({ handleRender }) {
   let location = useLocation()
   const theme = useTheme()
-  const isLogin = sessionStorage.getItem("isSocialLogin")
+  const isLogin = localStorage.getItem("isSocialLogin")
 
   if (isLogin === undefined || isLogin === null) {
     return null
@@ -86,7 +87,8 @@ export default function MenuAppBar({ handleRender }) {
               >
                 <MenuIcon />
               </MenuIconButton>
-              <MainAppBar path={location.pathname} />
+              <MainAppBar path={location.pathname}/>
+              <AccountUser/>
               <CreateClassButton handleRender={handleRender} />
             </Toolbar>
             <Grid

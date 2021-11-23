@@ -1,6 +1,9 @@
 import React, { useState } from "react"
 //import { useGoogleLogin } from 'react-google-login'
-import { BrowserRouter as Router, Route } from "react-router-dom"
+//import { BrowserRouter as Router, Route, useHistory} from "react-router-dom"
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 
 import { Redirect, Switch } from "react-router"
 
@@ -18,6 +21,7 @@ import SignUp from "../User/SignUp"
 //import SocialLogin from "../User/Social-SignIn/Google-Login-Button";
 import SocialLogout from "../User/Social-SignIn/Google-Logout-Button"
 import SocialLogin from "../User/Social-SignIn/Google-Login-Button"
+//import formEmail from "../User/Email/Form-Email"
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   marginTop: theme.spacing(3),
@@ -35,6 +39,7 @@ function App() {
   console.log(isLogin)
   const [newClassId, setNewClassId] = useState("")
 
+  //history.push('/');
   //console.log(isLogin);
   return (
     <Router>
@@ -46,15 +51,19 @@ function App() {
               exact
               path="/"
               render={() => {
-                const isLogin = sessionStorage.getItem("isSocialLogin")
-                console.log(isLogin)
-                return isLogin ? (
-                  <Homepage newClassId={newClassId} />
-                ) : (
-                  <Redirect to="/sign-in" />
-                )
+                if (localStorage.isSocialLogin) {
+                  console.log("pasrse");
+                  console.log(JSON.parse(localStorage.isSocialLogin));
+                  return <Homepage newClassId={newClassId} />
+                }
+                else {
+                  return <Redirect to="/sign-in" />
+                }
               }}
             />
+            {/* <Route exact path ="//forget-password">
+              <formEmail/>
+            </Route> */}
             <Route exact path="/log-in">
               <SocialLogin />
             </Route>
@@ -70,9 +79,18 @@ function App() {
             <Route exact path="/classes/*">
               <ClassDetails />
             </Route>
-            <Route exact path="/join/*">
-              <ClassJoin />
-            </Route>
+            < Route exact path="/join/*"
+              render={() => {
+                if (localStorage.isSocialLogin) {
+                  console.log("pasrse");
+                  console.log(JSON.parse(localStorage.isSocialLogin));
+                  return <ClassJoin />
+                }
+                else {
+                  return <Redirect to="/sign-in" />
+                }
+              }}
+            />
           </Switch>
         </StyledContainer>
       </TabsProvider>

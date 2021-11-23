@@ -10,10 +10,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useHistory } from 'react-router';
 
 
-
-import sendUserInfoSignUp from '../DataConnection/SignUpHandler';
+import sendUserInfoSignUp, { sendOtpValidEmail } from '../DataConnection/SignUpHandler';
+import { Dialog, DialogContent } from "@mui/material";
+import { BasicTextFields } from "./Email/Form-Email";
 
 function Copyright(props) {
   return (
@@ -31,50 +33,105 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-
+  const history = useHistory();
+  const [message,setMessage] = useState("Nhập email sai format hoặc bỏ trống !");
+  const [itemInput, setItemInput] = useState(null);
+  const [openPopup, setOpenPopup] = useState(false);
   const [errorEmail, setErrorEmail] = useState(null);
   const [errorUserName, setErrorUserName] = useState(null);
   const [errorPassword, setErrorPassword] = useState(null);
+  const [userInfo, setUserInfo] = useState(
+    {
+      email: '',
+      password: '',
+      username: ''
+    });
 
-  const handleError = (error)=>
-  {
+  const handleSend = async (e) => {
+    console.log(userInfo);
+    e.preventDefault();
+    console.log(itemInput);
+    const OTP = itemInput;
+    const check = await sendOtpValidEmail(OTP, userInfo);
+    console.log(check);
+    
+    if(check === true)
+    {
+      setUserInfo(
+        {
+          email: '',
+          password: '',
+          username: ''
+        }
+      )
+      setOpenPopup(false);
+
+      history.replace('/sign-in');
+    }
+   
+    // userInfo =
+    // {
+    //   email: '',
+    //   password: '',
+    //   username: ''
+    // };
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setOpenPopup(false);
+  }
+
+  const handleError = (error) => {
     let email = error.email;
     let username = error.username;
-    let password = error.password; 
-    
-    setErrorEmail(!email.match(/.+@.+/));
-    setErrorUserName((username!=="")? false:true )
-    setErrorPassword((password!=="")? false:true )
+    let password = error.password;
 
-    if (errorEmail===false&&errorUserName===false&&errorPassword===false)
-    {
+  
+    setErrorEmail(!email.match(/.+@.+/));
+    setErrorUserName((username !== "") ? false : true)
+    setErrorPassword((password !== "") ? false : true)
+
+    if (errorEmail === false && errorUserName === false && errorPassword === false) {
       return false;
     }
     return true;
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-   
-      const data = new FormData(event.currentTarget);
 
-      const userInfo =
-      {
-        email: data.get('email'),
-        password: data.get('password'),
-        username: data.get('username')
-      };
-  
-  
-  
-      //sendUserInfoSignUp(userInfo);
-    
-      console.log(handleError(userInfo));
-      if(handleError(userInfo)===false)
-      {
-        sendUserInfoSignUp(userInfo);
+    console.log("submit")
+    const data = new FormData(event.currentTarget);
+
+    const user =
+    {
+      email: data.get('email'),
+      password: data.get('password'),
+      username: data.get('username')
+    };
+
+    setUserInfo(user);
+
+    //sendUserInfoSignUp(userInfo);
+
+    //console.log(handleError(userInfo));
+    if (handleError(user) === false) {
+      console.log("handle")
+      const checkExistInData = await sendUserInfoSignUp(userInfo);
+      console.log("checkExist")
+      console.log(checkExistInData)
+      if (checkExistInData === true) {
+        setOpenPopup(true);
       }
-     
+      else
+      {
+        setMessage("Email đã được sử dụng hoặc không tồn tại!");
+        setErrorEmail(true);
+      }
+
+    }
+
   };
 
   return (
@@ -107,7 +164,7 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   //onChange={handleOnchange}
-                  helperText={errorEmail? 'Nhập email sai format!' : ' '}
+                  helperText={errorEmail ?  message : ' '}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -119,7 +176,7 @@ export default function SignUp() {
                   label="User Name"
                   name="username"
                   autoComplete="username"
-                  helperText={errorUserName? 'Không thể bỏ trống' : ' '}
+                  helperText={errorUserName ? 'Không thể bỏ trống' : ' '}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -132,7 +189,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="password"
-                  helperText={errorPassword? 'Không thể bỏ trống' : ' '}
+                  helperText={errorPassword ? 'Không thể bỏ trống' : ' '}
                 />
               </Grid>
             </Grid>
@@ -153,6 +210,22 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
+        <Dialog open={openPopup}
+        >
+          <DialogContent>
+            <Typography>
+              <b>Nhập mã xác thực</b>
+            </Typography>
+            <form>
+              <BasicTextFields
+                itemInput={itemInput}
+                setItemInput={setItemInput}
+              />
+              <Button type="cancel" onClick={handleCancel}>Cancel</Button>
+              <Button type="submit" onClick={handleSend}>Submit</Button>
+            </form>
+          </DialogContent>
+        </Dialog>
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>

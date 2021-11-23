@@ -39,7 +39,6 @@ export default function StreamTabPanel({ value, index }) {
     // eslint-disable-next-line
   }, [])
 
-  console.log(classInfo)
   return (
     <TabPanel value={value} index={index}>
       <Container>

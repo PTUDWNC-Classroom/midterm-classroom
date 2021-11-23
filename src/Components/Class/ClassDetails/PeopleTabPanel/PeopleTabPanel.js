@@ -2,11 +2,19 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { useLocation } from "react-router"
 
-import { Grid, Container, Typography } from "@mui/material"
+import {
+  Grid,
+  Container,
+  Typography,
+  Menu,
+  MenuItem,
+  IconButton,
+} from "@mui/material"
 import CircularProgress from "@mui/material/CircularProgress"
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt"
 
 import TabPanel from "../TabPanel"
-import Account from "./Account"
+import Account, { StudentAccount } from "./Account"
 import { styled } from "@mui/system"
 import { blue } from "@mui/material/colors"
 
@@ -40,12 +48,52 @@ const StudentTotal = ({ studentList }) => {
   }
 }
 
-export default function PeopleTabPanel({ value, index }) {
+const StudentSettingMenu = ({ anchorEl, handleClose }) => {
+  return (
+    <Menu
+      id="student-setting-menu"
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+    >
+      <MenuItem onClick={handleClose}>Email student</MenuItem>
+      <MenuItem onClick={handleClose}>Remove</MenuItem>
+    </Menu>
+  )
+}
+
+export default function PeopleTabPanel({ value, index, role }) {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [teacherList, setTeacherList] = useState([])
   const [studentList, setStudentList] = useState([])
+  const [anchorEl, setAnchorEl] = React.useState(null)
   let location = useLocation()
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleInviteTeacher = () => {
+    alert("invite teacher")
+  }
+
+  const handleInviteStudent = () => {
+    alert("invite student")
+  }
 
   useEffect(() => {
     const getTeacherList = async (classId) => {
@@ -108,44 +156,68 @@ export default function PeopleTabPanel({ value, index }) {
     )
   } else {
     return (
-      <TabPanel value={value} index={index}>
-        <Container maxWidth="md">
-          <TeachersGrid container>
-            <Grid item>
-              <BlueTextTypography variant="h4">Teachers</BlueTextTypography>
-            </Grid>
-            <Grid item></Grid>
-          </TeachersGrid>
-          <div>
-            <Account userName={"Creator"} />
-            {teacherList &&
-              teacherList.map((teacher) => (
-                <Account key={teacher.userId} userName={teacher.userName} />
-              ))}
-          </div>
+      <>
+        <TabPanel value={value} index={index}>
+          <Container maxWidth="md">
+            <TeachersGrid
+              container
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Grid item>
+                <BlueTextTypography variant="h4">Teachers</BlueTextTypography>
+              </Grid>
+              {role === "creator" && (
+                <Grid item>
+                  <IconButton color="primary">
+                    <PersonAddAltIcon onClick={handleInviteTeacher} />
+                  </IconButton>
+                </Grid>
+              )}
+            </TeachersGrid>
+            <div>
+              <Account userName={"Creator"} />
+              {teacherList &&
+                teacherList.map((teacher) => (
+                  <Account
+                    key={teacher.userId}
+                    userName={teacher.userName}
+                    handleClick={handleClick}
+                  />
+                ))}
+            </div>
 
-          <StudentGrid
-            container
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Grid item>
-              <BlueTextTypography variant="h4">Students</BlueTextTypography>
-            </Grid>
-            <Grid item>
-              <BlueTextTypography>
-                <StudentTotal studentList={studentList} />
-              </BlueTextTypography>
-            </Grid>
-          </StudentGrid>
-          <div>
-            {studentList &&
-              studentList.map((student) => (
-                <Account key={student.userId} userName={student.userName} />
-              ))}
-          </div>
-        </Container>
-      </TabPanel>
+            <StudentGrid container alignItems="center">
+              <Grid item flexGrow={1}>
+                <BlueTextTypography variant="h4">Students</BlueTextTypography>
+              </Grid>
+              <Grid item style={{ marginRight: 10 }}>
+                <BlueTextTypography>
+                  <StudentTotal studentList={studentList} />
+                </BlueTextTypography>
+              </Grid>
+              {role === "creator" && (
+                <Grid item>
+                  <IconButton color="primary">
+                    <PersonAddAltIcon onClick={handleInviteStudent} />
+                  </IconButton>
+                </Grid>
+              )}
+            </StudentGrid>
+            <>
+              {studentList &&
+                studentList.map((student) => (
+                  <StudentAccount
+                    key={student.userId}
+                    userName={student.userName}
+                    handleClick={handleClick}
+                  />
+                ))}
+            </>
+          </Container>
+        </TabPanel>
+        <StudentSettingMenu handleClose={handleClose} anchorEl={anchorEl} />
+      </>
     )
   }
 }

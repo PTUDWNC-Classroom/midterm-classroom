@@ -128,13 +128,12 @@ export default function ClassInfo({
             <Stack direction="row" alignItems="center" spacing={1}>
               <Typography
                 display="block"
-                width="250px"
                 variant="h6"
                 noWrap
                 overflow="hidden"
                 text-overflow="ellipsis"
               >
-                <b>Class code:</b> {location + `/join/${inviteCode}`}
+                <b>Invitation link:</b> {location + `/join/${inviteCode}`}
               </Typography>
               <Tooltip title={copy ? "Copied!" : "Click to copy"}>
                 <IconButton

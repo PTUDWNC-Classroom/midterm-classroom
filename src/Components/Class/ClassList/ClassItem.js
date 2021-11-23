@@ -32,13 +32,7 @@ const StyledLinkRR = styled(LinkRR)(({ theme }) => ({
   },
 }))
 
-export default function ClassItem({
-  id,
-  className,
-  section,
-  memberTotal,
-  handleClick,
-}) {
+export default function ClassItem({ id, className, section, handleClick }) {
   const [shadow, setShadow] = React.useState(2)
   const [studentList, setStudentList] = React.useState([])
 

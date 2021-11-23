@@ -71,13 +71,14 @@ const StudentSettingMenu = ({ anchorEl, handleClose }) => {
   )
 }
 
-export default function PeopleTabPanel({ value, index, role }) {
+export default function PeopleTabPanel({ value, index }) {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [teacherList, setTeacherList] = useState([])
   const [studentList, setStudentList] = useState([])
   const [anchorEl, setAnchorEl] = React.useState(null)
   let location = useLocation()
+  const role = localStorage.role
 
   const handleClose = () => {
     setAnchorEl(null)
@@ -169,19 +170,18 @@ export default function PeopleTabPanel({ value, index, role }) {
               </Grid>
               {role === "creator" && (
                 <Grid item>
-                  <IconButton color="primary">
-                    <PersonAddAltIcon onClick={handleInviteTeacher} />
+                  <IconButton color="primary" onClick={handleInviteTeacher}>
+                    <PersonAddAltIcon />
                   </IconButton>
                 </Grid>
               )}
             </TeachersGrid>
             <div>
-              <Account userName={"Creator"} />
               {teacherList &&
                 teacherList.map((teacher) => (
                   <Account
                     key={teacher.userId}
-                    userName={teacher.userName}
+                    userName={teacher.username}
                     handleClick={handleClick}
                   />
                 ))}
@@ -198,8 +198,8 @@ export default function PeopleTabPanel({ value, index, role }) {
               </Grid>
               {role === "creator" && (
                 <Grid item>
-                  <IconButton color="primary">
-                    <PersonAddAltIcon onClick={handleInviteStudent} />
+                  <IconButton color="primary" onClick={handleInviteStudent}>
+                    <PersonAddAltIcon />
                   </IconButton>
                 </Grid>
               )}
@@ -209,7 +209,7 @@ export default function PeopleTabPanel({ value, index, role }) {
                 studentList.map((student) => (
                   <StudentAccount
                     key={student.userId}
-                    userName={student.userName}
+                    userName={student.username}
                     handleClick={handleClick}
                   />
                 ))}

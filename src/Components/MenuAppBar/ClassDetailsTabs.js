@@ -9,6 +9,7 @@ import { useTheme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 
 import { tabsContext } from "../../context/TabsContext"
+import { useLocation } from "react-router"
 
 const StyledTab = styled(Tab)`
   text-transform: none;
@@ -52,8 +53,10 @@ export function TabsManagerDownMD({ role }) {
   const { value, handleChange } = React.useContext(tabsContext)
   const theme = useTheme()
   const matchDownMD = useMediaQuery(theme.breakpoints.down("md"))
+  let location = useLocation()
+  const isHomepage = location.pathname !== "/"
 
-  if (matchDownMD) {
+  if (matchDownMD && isHomepage) {
     return (
       <Grid container item xs={12} justifyContent="center">
         <Tabs

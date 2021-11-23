@@ -32,8 +32,8 @@ export function StudentAccount({ userName, handleClick }) {
         </Grid>
       </Grid>
       <Grid item textAlign="right" xs={1}>
-        <IconButton>
-          <MoreVertIcon onClick={handleClick} />
+        <IconButton onClick={handleClick}>
+          <MoreVertIcon />
         </IconButton>
       </Grid>
     </StyledGrid>

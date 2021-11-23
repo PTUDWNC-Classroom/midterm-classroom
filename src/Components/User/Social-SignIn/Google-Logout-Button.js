@@ -1,4 +1,5 @@
 import React from 'react';
+//import GoogleButton from 'react-google-button';
 import { GoogleLogout } from 'react-google-login';
 import { useHistory } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ function SocialLogout() {
 
   let onSuccess = () => {
     
-    sessionStorage.removeItem('isSocialLogin')
+    localStorage.removeItem('isSocialLogin')
       console.log('Logout made successfully');
       alert('Logout made successfully ✌');
       history.replace("/");
@@ -21,7 +22,7 @@ function SocialLogout() {
     <div>
       <GoogleLogout
         clientId={clientId}
-        buttonText="Logout"
+        buttonText="Log Out Google"
         onLogoutSuccess={onSuccess}
       ></GoogleLogout>
 

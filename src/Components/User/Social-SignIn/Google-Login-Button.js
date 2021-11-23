@@ -3,6 +3,7 @@ import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleButton } from 'react-google-button'
 import { useHistory } from 'react-router';
+import { sendUserInfoSocial } from '../../DataConnection/SignUpHandler';
 
 
 
@@ -14,15 +15,34 @@ const clientId =
 function SocialLogin() {
     console.log("sociallogin");
     const history = useHistory();
-    const onSuccess = (res) => {
+    const onSuccess = async(res) => {
+        console.log(res.profileObj);
+        const user= {
+            name: res.profileObj.name,
+            email: res.profileObj.email
+        }
         alert(res.profileObj.name);
-        sessionStorage.setItem('isSocialLogin', true);
+
+        const _id = await sendUserInfoSocial(user);
+        console.log("id")
+        console.log(_id);
+       if(_id!==false)
+       {
+        const userInfo = {
+            _id: _id,
+            name: res.profileObj.name,
+            email: res.profileObj.email
+        }
+        localStorage.setItem('isSocialLogin', JSON.stringify(userInfo));
+        
         history.replace("/");
+       }
+       
         //window.location.reload();
     };
 
     const onFailure = (res) => {
-        sessionStorage.removeItem('isSocialLogin');
+        localStorage.removeItem('isSocialLogin');
         console.log('Login failed: res:', res.profileObj === undefined);
         alert(
             `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`

@@ -11,11 +11,10 @@ export default async function sendUserInfoSignIn(userInfo)
         username: userInfo.username,
         password: userInfo.password,
                   });
-
-      if (response) {
-        console.log("da sign in")
-      }
+     console.log("response")
+     return response.data;
     } catch (error) {
       console.error(error);
+      return false;
     }
   }

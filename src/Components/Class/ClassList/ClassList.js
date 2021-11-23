@@ -13,11 +13,11 @@ const ClassList = ({ newClassId }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
   const [anchorEl, setAnchorEl] = React.useState(null)
-  let user = null;
+  let user = null
   if (localStorage.isSocialLogin) {
-    console.log("pasrse");
-    console.log(JSON.parse(localStorage.isSocialLogin));
-    user = JSON.parse(localStorage.isSocialLogin);
+    console.log("pasrse")
+    console.log(JSON.parse(localStorage.isSocialLogin))
+    user = JSON.parse(localStorage.isSocialLogin)
   }
   const handleClose = () => {
     setAnchorEl(null)
@@ -30,11 +30,12 @@ const ClassList = ({ newClassId }) => {
   useEffect(() => {
     const getClassList = async () => {
       try {
-        const response = await axios.post(`${process.env.REACT_APP_HOST}classes/getClassList`,
+        const response = await axios.post(
+          `${process.env.REACT_APP_HOST}classes/class-list`,
           {
-            _id: user._id
+            _id: user._id,
           }
-        );
+        )
 
         if (response) {
           setIsLoaded(true)

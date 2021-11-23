@@ -36,7 +36,8 @@ const MainAppBar = ({ path }) => {
 
   switch (pathArr[1]) {
     case "classes":
-      return <ClassDetailsTabs role="creator" />
+      const role = localStorage.role
+      return <ClassDetailsTabs role={role} />
     default:
       return (
         <Typography
@@ -70,6 +71,7 @@ export default function MenuAppBar({ handleRender }) {
   let location = useLocation()
   const theme = useTheme()
   const isLogin = localStorage.getItem("isSocialLogin")
+  const role = localStorage.getItem("role")
 
   if (isLogin === undefined || isLogin === null) {
     return null
@@ -87,16 +89,16 @@ export default function MenuAppBar({ handleRender }) {
               >
                 <MenuIcon />
               </MenuIconButton>
-              <MainAppBar path={location.pathname}/>
-              <AccountUser/>
+              <MainAppBar path={location.pathname} />
               <CreateClassButton handleRender={handleRender} />
+              <AccountUser />
             </Toolbar>
             <Grid
               container
               justifyContent="center"
               style={{ marginBottom: theme.spacing(1) }}
             >
-              <TabsManagerDownMD role="" gridNumber={12} />
+              <TabsManagerDownMD role={role} gridNumber={12} />
             </Grid>
           </StyledAppBar>
         </HideOnScroll>

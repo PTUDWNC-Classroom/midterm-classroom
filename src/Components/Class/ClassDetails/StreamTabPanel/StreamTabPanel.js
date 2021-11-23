@@ -28,13 +28,33 @@ export default function StreamTabPanel({ value, index }) {
         )
         setClassInfo(res.data)
         handleClassDetails(res.data)
+
         document.title = res.data.className
+        return res.data._id === JSON.parse(localStorage.isSocialLogin)._id
       } catch (error) {
         console.error(error)
       }
     }
 
-    fetchClassDetail()
+    const fetchTeacherOfClass = async (classId) => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_HOST}classes/teachers-of-class/${classId}`
+        )
+
+        return res.data.find(
+          (element) => element === JSON.parse(localStorage.isSocialLogin)._id
+        )
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    if (fetchClassDetail()) {
+      localStorage.setItem("role", "creator")
+    } else if (fetchTeacherOfClass(classInfo._id)) {
+      localStorage.setItem("role", "creator")
+    } else localStorage.setItem("role", "member")
 
     // eslint-disable-next-line
   }, [])

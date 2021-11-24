@@ -19,9 +19,20 @@ export default function StreamTabPanel({ value, index }) {
   let location = useLocation()
   const theme = useTheme()
   const matchUpMD = useMediaQuery(theme.breakpoints.up("md"))
-  const userId =
-    JSON.parse(localStorage.isSocialLogin)._id ||
-    JSON.parse(localStorage.isLogin)._id
+
+  console.log("userId")
+  
+  let userId = null;
+  if(localStorage.isSocialLogin)
+  {
+    
+    userId =JSON.parse(localStorage.isSocialLogin)._id
+  }
+  else if (localStorage.isLogin)
+  {
+    console.log("vao localStorage")
+    userId = JSON.parse(localStorage.isLogin)._id
+  }
   console.log(userId)
   useEffect(() => {
     const fetchClassDetail = async () => {

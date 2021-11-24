@@ -40,13 +40,13 @@ export default function Profile() {
     username: "",
     userId: ""
   }
-  if(JSON.parse(localStorage.isLogin))
+  if(localStorage.isLogin)
   {
      user.email = JSON.parse(localStorage.isLogin).email
      user.username = JSON.parse(localStorage.isLogin).username
      user.userId = JSON.parse(localStorage.isLogin)._id
   }
-  else if(JSON.parse(localStorage.isSocialLogin))
+  else if(localStorage.isSocialLogin)
   {
      user.email = JSON.parse(localStorage.isSocialLogin).email
      user.username = JSON.parse(localStorage.isSocialLogin).username

@@ -38,16 +38,16 @@ export default function ClassJoin() {
     //getAccount function
     let user = null
     if (localStorage.isSocialLogin) {
-      console.log("Join Social ClassJoin.js")
-      console.log(JSON.parse(localStorage.isSocialLogin))
+      //console.log("Join Social ClassJoin.js")
+      //console.log(JSON.parse(localStorage.isSocialLogin))
       user = JSON.parse(localStorage.isSocialLogin)
     } else if (localStorage.isLogin) {
-      console.log("Join ClassJoin.js")
-      console.log(JSON.parse(localStorage.isLogin))
+      //console.log("Join ClassJoin.js")
+      //console.log(JSON.parse(localStorage.isLogin))
       user = JSON.parse(localStorage.isLogin)
     } else if (localStorage.isLogin) {
-      console.log("Join ClassJoin.js")
-      console.log(JSON.parse(localStorage.isLogin))
+      //console.log("Join ClassJoin.js")
+      //console.log(JSON.parse(localStorage.isLogin))
       user = JSON.parse(localStorage.isLogin)
     }
     console.log(user)

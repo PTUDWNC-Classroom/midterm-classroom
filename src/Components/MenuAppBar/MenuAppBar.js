@@ -17,6 +17,7 @@ import { useLocation } from "react-router-dom"
 import ClassDetailsTabs, { TabsManagerDownMD } from "./ClassDetailsTabs"
 import CreateClassButton from "./CreateClassButton"
 import AccountUser from "./AccountUser"
+import { tabsContext } from "../../context/TabsContext"
 
 const StyledAppBar = styled(AppBar)`
   background-color: ${grey[900]};
@@ -32,11 +33,11 @@ const MenuIconButton = styled(IconButton)(({ theme }) => ({
 
 const MainAppBar = ({ path }) => {
   const pathArr = path.split("/")
+  const { role } = React.useContext(tabsContext)
   //pathArr.shift();
 
   switch (pathArr[1]) {
     case "classes":
-      const role = localStorage.role
       return <ClassDetailsTabs role={role} />
     default:
       return (
@@ -70,20 +71,16 @@ HideOnScroll.propTypes = {
 export default function MenuAppBar({ handleRender }) {
   let location = useLocation()
   const theme = useTheme()
-  let isLogin = null;
-  const role = localStorage.getItem("role")
+  let isLogin = null
+  const { role } = React.useContext(tabsContext)
 
   // isLogin là social hoặc login bình thường
-  if(localStorage.getItem("isSocialLogin"))
-  {
-    isLogin = JSON.parse(localStorage.isSocialLogin);
-  }
-  else if(localStorage.getItem("isLogin"))
-  {
+  if (localStorage.getItem("isSocialLogin")) {
+    isLogin = JSON.parse(localStorage.isSocialLogin)
+  } else if (localStorage.getItem("isLogin")) {
     console.log("create button")
-    isLogin = JSON.parse(localStorage.isLogin);
+    isLogin = JSON.parse(localStorage.isLogin)
   }
-
 
   if (isLogin === null) {
     return null

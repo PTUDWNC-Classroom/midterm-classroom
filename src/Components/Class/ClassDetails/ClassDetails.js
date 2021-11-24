@@ -10,7 +10,7 @@ export default function ClassDetails() {
   return (
     <>
       <StreamTabPanel value={value} index={0} />
-      <PeopleTabPanel value={value} index={2}  />
+      <PeopleTabPanel value={value} index={2} />
     </>
   )
 }

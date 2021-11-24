@@ -1,15 +1,19 @@
 import axios from "axios";
 
-const url = `${process.env.REACT_APP_HOST}user/sign-in`
+const url = `${process.env.REACT_APP_HOST}join/invite`
 
-export default async function sendUserInfoSignIn(userInfo) 
+export default async function sendInviteLink(invite,email) 
 {
-    console.log(userInfo);
+    const role = localStorage.getItem('inviteRole');
+    localStorage.removeItem('inviteRole');
+    console.log(invite);
+    console.log(email)
     try {
       //const response = await axios.get(`${process.env.REACT_APP_HOST}classes`);
       const response = await axios.post(url,{
-        username: userInfo.username,
-        password: userInfo.password,
+        invite: invite,
+        email: email,
+        role: role
                   });
      console.log("response")
      return response.data;

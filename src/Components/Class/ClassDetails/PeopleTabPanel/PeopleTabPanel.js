@@ -9,6 +9,9 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Dialog,
+  DialogContent,
+  Button,
 } from "@mui/material"
 import CircularProgress from "@mui/material/CircularProgress"
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt"
@@ -17,6 +20,9 @@ import TabPanel from "../TabPanel"
 import Account, { StudentAccount } from "./Account"
 import { styled } from "@mui/system"
 import { blue } from "@mui/material/colors"
+import { BasicTextFields } from "../../../User/Email/Form-Email"
+import sendInviteLink from "../../../DataConnection/SendInviteLink"
+//import { PermPhoneMsg } from "@mui/icons-material"
 
 const BlueTextTypography = styled(Typography)(({ theme }) => ({
   color: blue[500],
@@ -77,7 +83,31 @@ export default function PeopleTabPanel({ value, index }) {
   const [teacherList, setTeacherList] = useState([])
   const [studentList, setStudentList] = useState([])
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [itemInput, setItemInput] = useState(null)
   let location = useLocation()
+  const [openPopup, setOpenPopup] = useState(false)
+
+  const handleSend = async (e) => {
+    console.log(itemInput)
+    e.preventDefault()
+    //console.log("chan ta");
+    let url = location.pathname.split("/")
+    console.log(url[url.length - 1])
+    //sendMailInviteLink
+    const sended = await sendInviteLink(url[url.length - 1], itemInput)
+    if (sended === true) {
+      alert("Đã gửi thành công!")
+    } else {
+      alert("Chưa gửi được!")
+    }
+    setOpenPopup(false)
+  }
+
+  const handleCancel = (e) => {
+    e.preventDefault()
+    setOpenPopup(false)
+  }
+
   const role = localStorage.role
 
   const handleClose = () => {
@@ -88,12 +118,16 @@ export default function PeopleTabPanel({ value, index }) {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleInviteTeacher = () => {
-    alert("invite teacher")
+  const handleInviteTeacher = async () => {
+    console.log(role)
+    localStorage.setItem("inviteRole", "Teacher")
+
+    setOpenPopup(true)
   }
 
   const handleInviteStudent = () => {
-    alert("invite student")
+    localStorage.setItem("inviteRole", "Student")
+    setOpenPopup(true)
   }
 
   useEffect(() => {
@@ -205,15 +239,41 @@ export default function PeopleTabPanel({ value, index }) {
               )}
             </StudentGrid>
             <>
-              {studentList &&
-                studentList.map((student) => (
-                  <StudentAccount
-                    key={student.userId}
-                    userName={student.username}
-                    handleClick={handleClick}
-                  />
-                ))}
+              {studentList && localStorage.role === "creator"
+                ? studentList.map((student) => (
+                    <StudentAccount
+                      key={student.userId}
+                      userName={student.username}
+                      handleClick={handleClick}
+                    />
+                  ))
+                : studentList.map((student) => (
+                    <Account
+                      key={student.userId}
+                      userName={student.username}
+                      handleClick={handleClick}
+                    />
+                  ))}
             </>
+            <Dialog open={openPopup}>
+              <DialogContent>
+                <Typography>
+                  <b>Nhập Email để mời</b>
+                </Typography>
+                <form>
+                  <BasicTextFields
+                    itemInput={itemInput}
+                    setItemInput={setItemInput}
+                  />
+                  <Button type="cancel" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" onClick={handleSend}>
+                    Submit
+                  </Button>
+                </form>
+              </DialogContent>
+            </Dialog>
           </Container>
         </TabPanel>
         <StudentSettingMenu handleClose={handleClose} anchorEl={anchorEl} />

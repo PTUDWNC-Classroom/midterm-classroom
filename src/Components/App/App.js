@@ -35,6 +35,10 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 // }
 
 function App() {
+  // if(sessionStorage.getItem("isSocialLogin"))
+  // {
+
+  // }
   const isLogin = sessionStorage.getItem("isSocialLogin")
   console.log(isLogin)
   const [newClassId, setNewClassId] = useState("")

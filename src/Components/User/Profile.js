@@ -34,9 +34,27 @@ export default function Profile() {
   const [edit, setEdit] = React.useState(false)
 
   const [studentId, setStudentId] = React.useState("")
-  const email = JSON.parse(localStorage.isSocialLogin).email
-  const username = JSON.parse(localStorage.isSocialLogin).username
-  const userId = JSON.parse(localStorage.isSocialLogin)._id
+  console.log(JSON.parse(localStorage.isLogin))
+  let user = {
+    email: "",
+    username: "",
+    userId: ""
+  }
+  if(JSON.parse(localStorage.isLogin))
+  {
+     user.email = JSON.parse(localStorage.isLogin).email
+     user.username = JSON.parse(localStorage.isLogin).username
+     user.userId = JSON.parse(localStorage.isLogin)._id
+  }
+  else if(JSON.parse(localStorage.isSocialLogin))
+  {
+     user.email = JSON.parse(localStorage.isSocialLogin).email
+     user.username = JSON.parse(localStorage.isSocialLogin).username
+     user.userId = JSON.parse(localStorage.isSocialLogin)._id
+  }
+  // const email = JSON.parse(localStorage.isSocialLogin).email
+  // const username = JSON.parse(localStorage.isSocialLogin).username
+  // const userId = JSON.parse(localStorage.isSocialLogin)._id
 
   const handleEdit = () => {
     setEdit(!edit)
@@ -52,7 +70,7 @@ export default function Profile() {
         const response = await axios.post(
           `${process.env.REACT_APP_HOST}user/add-student-id`,
           {
-            userId: userId,
+            userId: user.userId,
             studentId: studentId,
           }
         )
@@ -77,7 +95,7 @@ export default function Profile() {
           />
         </Grid>
         <Grid item>
-          <Typography variant="h5">{username}</Typography>
+          <Typography variant="h5">{user.username}</Typography>
         </Grid>
       </Grid>
 
@@ -98,7 +116,7 @@ export default function Profile() {
                       </ListItemText>
                     </Grid>
                     <Grid item md={9} xs={12}>
-                      <Typography variant="subtitle1">{email}</Typography>
+                      <Typography variant="subtitle1">{user.email}</Typography>
                     </Grid>
                   </Grid>
                   <ListItemText />

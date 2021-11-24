@@ -65,7 +65,7 @@ export default function SignUp() {
         }
       )
       setOpenPopup(false);
-
+      alert("Đăng ký thành công !");
       history.replace('/sign-in');
     }
    

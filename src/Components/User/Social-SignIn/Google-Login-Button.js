@@ -21,7 +21,6 @@ function SocialLogin() {
             name: res.profileObj.name,
             email: res.profileObj.email
         }
-        alert(res.profileObj.name);
 
         const _id = await sendUserInfoSocial(user);
         console.log("id")
@@ -30,18 +29,35 @@ function SocialLogin() {
        {
         const userInfo = {
             _id: _id,
-            name: res.profileObj.name,
+            username: res.profileObj.name,
             email: res.profileObj.email
         }
+        // SET ITEM localStorage
         localStorage.setItem('isSocialLogin', JSON.stringify(userInfo));
+        alert("Đăng nhập thành công !");
+
+        console.log(localStorage.previousLocation);
+        if(localStorage.previousLocation)
+        {
+            let url = localStorage.previousLocation;
+            localStorage.removeItem('previousLocation');
+            history.replace(url);
+        }
+        else
+        {
+            history.replace("/");
+        }
         
-        history.replace("/");
+       }
+       else{
+           alert("Email đã được sử dụng !");
        }
        
         //window.location.reload();
     };
 
     const onFailure = (res) => {
+        // REMOVE localStorage
         localStorage.removeItem('isSocialLogin');
         console.log('Login failed: res:', res.profileObj === undefined);
         alert(

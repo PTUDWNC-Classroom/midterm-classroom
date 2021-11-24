@@ -13,10 +13,22 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 
 import SocialLogout from '../User/Social-SignIn/Google-Logout-Button'
+import { useHistory } from 'react-router';
 
 export default function AccountUser() {
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  let isHidenLogOut = "";
+  let isHidenLogOutSocial = "";
+  if(localStorage.isSocialLogin)
+  {
+    isHidenLogOut = "none";
+  }
+  else if (localStorage.isLogin)
+  {
+    isHidenLogOutSocial = "none";
+  }
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -24,8 +36,10 @@ export default function AccountUser() {
     setAnchorEl(null);
   };
 
-  const handleLogout = ()=>{
-
+  const handleLogout = () => {
+    //REMOVE localStorage
+    localStorage.removeItem('isLogin');
+    history.replace('/');
   }
   return (
     <React.Fragment>
@@ -89,20 +103,25 @@ export default function AccountUser() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem
-            onClick={()=>{
-                handleLogout();
-                handleClose();
-            }}
+        <Box clone display={{ md: isHidenLogOut }}>
+        <MenuItem 
+          onClick={() => {
+            handleLogout();
+            handleClose();
+          }}
         >
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout
         </MenuItem>
-        <MenuItem>
-         <SocialLogout/>
-        </MenuItem>
+        </Box>
+        <Box clone display={{ md: isHidenLogOutSocial }}>
+          <MenuItem>
+            <SocialLogout />
+          </MenuItem>
+        </Box>
+
       </Menu>
     </React.Fragment>
   );

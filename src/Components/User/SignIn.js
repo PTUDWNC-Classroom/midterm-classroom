@@ -54,12 +54,27 @@ export default function SignIn() {
       password: data.get('password'),
     }
     const user = await sendUserInfoSignIn(userInfo)
-    console.log("user")
+    console.log("da vao sendUserInfoSignIn")
     console.log(user);
     if(user!==false)
     {
-      localStorage.setItem('isSocialLogin',JSON.stringify(user));
-      history.replace('/');
+      // SET ITEM localStorage Login
+      localStorage.setItem('isLogin',JSON.stringify(user));
+      alert("Đăng nhập thành công !!!");
+      console.log("đang nhap")
+      console.log(localStorage.previousLocation)
+      if(localStorage.previousLocation)
+      {
+        console.log(localStorage.previousLocation)
+      }
+      else
+      {
+        history.replace('/');
+      }
+    }
+    else
+    {
+      alert("Đăng nhập không thành công !!!");
     }
   };
 

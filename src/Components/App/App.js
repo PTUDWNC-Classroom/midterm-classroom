@@ -52,8 +52,14 @@ function App() {
               path="/"
               render={() => {
                 if (localStorage.isSocialLogin) {
-                  console.log("pasrse");
+                  console.log("Social app.js");
                   console.log(JSON.parse(localStorage.isSocialLogin));
+                  return <Homepage newClassId={newClassId} />
+                }
+                else if(localStorage.isLogin)
+                {
+                  console.log("Login app.js");
+                  console.log(JSON.parse(localStorage.isLogin));
                   return <Homepage newClassId={newClassId} />
                 }
                 else {
@@ -82,11 +88,17 @@ function App() {
             < Route exact path="/join/*"
               render={() => {
                 if (localStorage.isSocialLogin) {
-                  console.log("pasrse");
+                  console.log("Social join app.js");
                   console.log(JSON.parse(localStorage.isSocialLogin));
                   return <ClassJoin />
                 }
+                else if(localStorage.isLogin) {
+                  console.log("Login join app.js");
+                  console.log(JSON.parse(localStorage.isLogin));
+                  return <ClassJoin />
+                }
                 else {
+                  localStorage.setItem('previousLocation',window.location.pathname)
                   return <Redirect to="/sign-in" />
                 }
               }}

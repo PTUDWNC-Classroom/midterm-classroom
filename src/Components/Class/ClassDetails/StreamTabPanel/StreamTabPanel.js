@@ -19,7 +19,7 @@ export default function StreamTabPanel({ value, index }) {
   let location = useLocation()
   const theme = useTheme()
   const matchUpMD = useMediaQuery(theme.breakpoints.up("md"))
-
+  console.log(process.env.REACT_APP_HOST + location.pathname.replace("/", ""));
   useEffect(() => {
     const fetchClassDetail = async () => {
       try {

@@ -43,7 +43,15 @@ export default function CreateClassButton({ handleRender }) {
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
-  let user = JSON.parse(localStorage.isSocialLogin);
+  let user = null;
+  if(localStorage.isSocialLogin)
+  {
+    user = JSON.parse(localStorage.isSocialLogin);
+  }
+  else if (localStorage.isLogin)
+  {
+    user = JSON.parse(localStorage.isLogin);
+  }
 
   let location = useLocation()
   const pathArr = location.pathname.split("/")

@@ -10,6 +10,8 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox"
 import { Button } from "@mui/material"
 import { grey } from "@mui/material/colors"
 
+import { useHistory } from 'react-router';
+import addStudentIntoClass from "../../DataConnection/JoinClass"
 const StyledLinkRR = styled(LinkRR)(({ theme }) => ({
   textOverflow: "ellipsis",
   overflow: "hidden",
@@ -23,14 +25,33 @@ const StyledLinkRR = styled(LinkRR)(({ theme }) => ({
 //import Grid from '@mui/icons-material/Grid3x3Sharp'
 
 export default function ClassJoin() {
+  const history = useHistory();
   let location = useLocation()
   console.log(location.pathname)
   const str = location.pathname.split("/")
   // use bcrypt
   const id = str[str.length - 1]
 
-  function handleJoinClass() {
+  async function handleJoinClass() {
     //getAccount function
+    let user = null;
+    if (localStorage.isSocialLogin) {
+      console.log("Join Social ClassJoin.js");
+      console.log(JSON.parse(localStorage.isSocialLogin));
+      user = JSON.parse(localStorage.isSocialLogin);
+    }
+    else if(localStorage.isLogin)
+    {
+      console.log("Join ClassJoin.js");
+      console.log(JSON.parse(localStorage.isLogin));
+      user = JSON.parse(localStorage.isLogin);
+    }
+    console.log(user);
+    const check = await addStudentIntoClass(user,id);
+    if(check!== null)
+    {
+      history.push(`/classes/${id}`);
+    }
   }
   return (
     <React.Fragment>
@@ -56,11 +77,14 @@ export default function ClassJoin() {
           alignItems="center"
           sx={{ bgcolor: "#F0F8FF", height: "60vh" }}
         >
-          <StyledLinkRR to={`/classes/${id}`}>
+          {/* <StyledLinkRR to={`/classes/${id}`}>
             <Button variant="contained" onClick={handleJoinClass}>
               JOIN CLASS
             </Button>
-          </StyledLinkRR>
+          </StyledLinkRR> */}
+          <Button variant="contained" onClick={handleJoinClass}>
+              JOIN CLASS
+            </Button>
         </Box>
       </Container>
     </React.Fragment>

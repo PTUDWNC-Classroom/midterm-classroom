@@ -70,10 +70,22 @@ HideOnScroll.propTypes = {
 export default function MenuAppBar({ handleRender }) {
   let location = useLocation()
   const theme = useTheme()
-  const isLogin = localStorage.getItem("isSocialLogin")
+  let isLogin = null;
   const role = localStorage.getItem("role")
 
-  if (isLogin === undefined || isLogin === null) {
+  // isLogin là social hoặc login bình thường
+  if(localStorage.getItem("isSocialLogin"))
+  {
+    isLogin = JSON.parse(localStorage.isSocialLogin);
+  }
+  else if(localStorage.getItem("isLogin"))
+  {
+    console.log("create button")
+    isLogin = JSON.parse(localStorage.isLogin);
+  }
+
+
+  if (isLogin === null) {
     return null
   } else {
     return (

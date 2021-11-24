@@ -11,6 +11,7 @@ function SocialLogout() {
 
   let onSuccess = () => {
     
+    // REMOVE localStorage
     localStorage.removeItem('isSocialLogin')
       console.log('Logout made successfully');
       alert('Logout made successfully ✌');

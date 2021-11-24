@@ -6,7 +6,7 @@ const url2 = `${process.env.REACT_APP_HOST}user/login-social`
 
 export default async function sendUserInfoSignUp(userInfo) 
 {
-    console.log(userInfo);
+    //console.log(userInfo);
     try {
       //const response = await axios.get(`${process.env.REACT_APP_HOST}classes`);
       const response = await axios.post(url,{
@@ -18,7 +18,7 @@ export default async function sendUserInfoSignUp(userInfo)
     
      return response.data;
     } catch (error) {
-      console.error(error);
+      //console.error(error);
     }
   }
 

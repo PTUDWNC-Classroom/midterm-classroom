@@ -13,18 +13,18 @@ const clientId =
     '613642092414-lvnn10cq77c733cd23iqmqpmvih03j7j.apps.googleusercontent.com';
 
 function SocialLogin() {
-    console.log("sociallogin");
+    //console.log("sociallogin");
     const history = useHistory();
     const onSuccess = async(res) => {
-        console.log(res.profileObj);
+        //console.log(res.profileObj);
         const user= {
             name: res.profileObj.name,
             email: res.profileObj.email
         }
 
         const _id = await sendUserInfoSocial(user);
-        console.log("id")
-        console.log(_id);
+        //console.log("id")
+        //console.log(_id);
        if(_id!==false)
        {
         const userInfo = {
@@ -36,7 +36,7 @@ function SocialLogin() {
         localStorage.setItem('isSocialLogin', JSON.stringify(userInfo));
         alert("Đăng nhập thành công !");
 
-        console.log(localStorage.previousLocation);
+        //console.log(localStorage.previousLocation);
         if(localStorage.previousLocation)
         {
             let url = localStorage.previousLocation;
@@ -59,10 +59,10 @@ function SocialLogin() {
     const onFailure = (res) => {
         // REMOVE localStorage
         localStorage.removeItem('isSocialLogin');
-        console.log('Login failed: res:', res.profileObj === undefined);
-        alert(
-            `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`
-        );
+        //console.log('Login failed: res:', res.profileObj === undefined);
+        // alert(
+        //     `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`
+        // );
     };
 
     return (

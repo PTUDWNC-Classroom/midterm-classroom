@@ -34,7 +34,7 @@ export default function Profile() {
   const [edit, setEdit] = React.useState(false)
 
   const [studentId, setStudentId] = React.useState("")
-  console.log(JSON.parse(localStorage.isLogin))
+  //console.log(JSON.parse(localStorage.isLogin))
   let user = {
     email: "",
     username: "",

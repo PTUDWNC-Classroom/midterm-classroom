@@ -16,17 +16,17 @@ const ClassList = ({ newClassId }) => {
   let _id = null;
   let user = null
   if (localStorage.isSocialLogin) {
-    console.log("GET localStorage SOCIAL LOGIN CLASS LIST")
-    console.log(JSON.parse(localStorage.isSocialLogin))
+    //console.log("GET localStorage SOCIAL LOGIN CLASS LIST")
+    //console.log(JSON.parse(localStorage.isSocialLogin))
     user = JSON.parse(localStorage.isSocialLogin)
     _id = user._id;
   }
   else if(localStorage.isLogin)
   {
-    console.log("GET localStorage LOGIN CLASS LIST")
-    console.log(JSON.parse(localStorage.isLogin))
+    //console.log("GET localStorage LOGIN CLASS LIST")
+    //console.log(JSON.parse(localStorage.isLogin))
     user = JSON.parse(localStorage.isLogin)
-    console.log(user);
+    //console.log(user);
     _id = user._id;
   }
   const handleClose = () => {
@@ -37,9 +37,9 @@ const ClassList = ({ newClassId }) => {
     setAnchorEl(event.currentTarget)
   }
 
-  console.log("userEffect")
+  //console.log("userEffect")
   useEffect(() => {
-    console.log("vao userEffect")
+    //console.log("vao userEffect")
     const getClassList = async () => {
       try {
         const response = await axios.post(
@@ -48,15 +48,15 @@ const ClassList = ({ newClassId }) => {
             _id: _id,
           }
         )
-        console.log("da response")
-        console.log(response.data)
+        //console.log("da response")
+        //console.log(response.data)
         if (response) {
           setIsLoaded(true)
           setItems(response.data)
         }
       } catch (error) {
-        console.log("lỗi get classlist")
-        console.error(error)
+        //console.log("lỗi get classlist")
+        //console.error(error)
         setIsLoaded(true)
         setError(error)
       }

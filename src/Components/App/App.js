@@ -39,8 +39,8 @@ function App() {
   // {
 
   // }
-  const isLogin = sessionStorage.getItem("isSocialLogin")
-  console.log(isLogin)
+  //const isLogin = sessionStorage.getItem("isSocialLogin")
+  //console.log(isLogin)
   const [newClassId, setNewClassId] = useState("")
 
   //history.push('/');
@@ -56,12 +56,12 @@ function App() {
               path="/"
               render={() => {
                 if (localStorage.isSocialLogin) {
-                  console.log("Social app.js")
-                  console.log(JSON.parse(localStorage.isSocialLogin))
+                  //console.log("Social app.js")
+                  //console.log(JSON.parse(localStorage.isSocialLogin))
                   return <Homepage newClassId={newClassId} />
                 } else if (localStorage.isLogin) {
-                  console.log("Login app.js")
-                  console.log(JSON.parse(localStorage.isLogin))
+                  //console.log("Login app.js")
+                  //console.log(JSON.parse(localStorage.isLogin))
                   return <Homepage newClassId={newClassId} />
                 } else {
                   return <Redirect to="/sign-in" />
@@ -91,12 +91,12 @@ function App() {
               path="/join-Student/*"
               render={() => {
                 if (localStorage.isSocialLogin) {
-                  console.log("Social join app.js")
-                  console.log(JSON.parse(localStorage.isSocialLogin))
+                  //console.log("Social join app.js")
+                  //console.log(JSON.parse(localStorage.isSocialLogin))
                   return <ClassJoin />
                 } else if (localStorage.isLogin) {
-                  console.log("Login join app.js")
-                  console.log(JSON.parse(localStorage.isLogin))
+                  //console.log("Login join app.js")
+                  //console.log(JSON.parse(localStorage.isLogin))
                   return <ClassJoin />
                 } else {
                   localStorage.setItem(
@@ -112,12 +112,12 @@ function App() {
               path="/join-Teacher/*"
               render={() => {
                 if (localStorage.isSocialLogin) {
-                  console.log("Social join app.js")
-                  console.log(JSON.parse(localStorage.isSocialLogin))
+                  //console.log("Social join app.js")
+                  //console.log(JSON.parse(localStorage.isSocialLogin))
                   return <ClassJoin />
                 } else if (localStorage.isLogin) {
-                  console.log("Login join app.js")
-                  console.log(JSON.parse(localStorage.isLogin))
+                  //console.log("Login join app.js")
+                  //console.log(JSON.parse(localStorage.isLogin))
                   return <ClassJoin />
                 } else {
                   localStorage.setItem(

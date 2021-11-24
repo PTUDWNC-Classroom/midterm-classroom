@@ -78,7 +78,7 @@ export default function MenuAppBar({ handleRender }) {
   if (localStorage.getItem("isSocialLogin")) {
     isLogin = JSON.parse(localStorage.isSocialLogin)
   } else if (localStorage.getItem("isLogin")) {
-    console.log("create button")
+    //console.log("create button")
     isLogin = JSON.parse(localStorage.isLogin)
   }
 

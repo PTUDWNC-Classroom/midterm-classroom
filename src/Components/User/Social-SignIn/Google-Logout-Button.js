@@ -12,9 +12,9 @@ function SocialLogout() {
   let onSuccess = () => {
     
     // REMOVE localStorage
-    localStorage.removeItem('isSocialLogin')
-      console.log('Logout made successfully');
-      alert('Logout made successfully ✌');
+      localStorage.removeItem('isSocialLogin')
+      //console.log('Logout made successfully');
+      //alert('Logout made successfully ✌');
       history.replace("/");
       //window.location.reload();
   };

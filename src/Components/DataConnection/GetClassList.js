@@ -10,7 +10,7 @@ export default async function getClassList(setIsLoaded,setItems,setError)
         setItems(response.data);
       }
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       setIsLoaded(true);
       setError(error);
     }

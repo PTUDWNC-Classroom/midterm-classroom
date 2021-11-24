@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const url = "http://localhost:3000/user/sign-up"
-const url1 = "http://localhost:3000/user/valid-email"
-const url2 = "http://localhost:3000/user/login-social"
+const url = `${process.env.REACT_APP_HOST}user/sign-up`
+const url1 = `${process.env.REACT_APP_HOST}user/valid-email`
+const url2 = `${process.env.REACT_APP_HOST}user/login-social`
 
 export default async function sendUserInfoSignUp(userInfo) 
 {

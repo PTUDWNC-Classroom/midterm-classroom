@@ -85,7 +85,25 @@ function App() {
             <Route exact path="/classes/*">
               <ClassDetails />
             </Route>
-            < Route exact path="/join/*"
+            < Route exact path="/join-Student/*"
+              render={() => {
+                if (localStorage.isSocialLogin) {
+                  console.log("Social join app.js");
+                  console.log(JSON.parse(localStorage.isSocialLogin));
+                  return <ClassJoin />
+                }
+                else if(localStorage.isLogin) {
+                  console.log("Login join app.js");
+                  console.log(JSON.parse(localStorage.isLogin));
+                  return <ClassJoin />
+                }
+                else {
+                  localStorage.setItem('previousLocation',window.location.pathname)
+                  return <Redirect to="/sign-in" />
+                }
+              }}
+            />
+            < Route exact path="/join-Teacher/*"
               render={() => {
                 if (localStorage.isSocialLogin) {
                   console.log("Social join app.js");

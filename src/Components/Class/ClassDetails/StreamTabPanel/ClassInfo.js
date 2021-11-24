@@ -71,7 +71,7 @@ export default function ClassInfo({
   }
 
   const handleCopyClassCode = (location) => {
-    navigator.clipboard.writeText(location + `/join/${inviteCode}`)
+    navigator.clipboard.writeText(location + `/join-Student/${inviteCode}`)
     setCopy(true)
   }
 
@@ -133,7 +133,7 @@ export default function ClassInfo({
                 overflow="hidden"
                 text-overflow="ellipsis"
               >
-                <b>Invitation link:</b> {location + `/join/${inviteCode}`}
+                <b>Invitation link:</b> {location + `/join-Student/${inviteCode}`}
               </Typography>
               <Tooltip title={copy ? "Copied!" : "Click to copy"}>
                 <IconButton

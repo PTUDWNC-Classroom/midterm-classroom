@@ -2,8 +2,7 @@ import React, { useState } from "react"
 //import { useGoogleLogin } from 'react-google-login'
 //import { BrowserRouter as Router, Route, useHistory} from "react-router-dom"
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
+import { BrowserRouter as Router, Route } from "react-router-dom"
 
 import { Redirect, Switch } from "react-router"
 
@@ -21,6 +20,7 @@ import SignUp from "../User/SignUp"
 //import SocialLogin from "../User/Social-SignIn/Google-Login-Button";
 import SocialLogout from "../User/Social-SignIn/Google-Logout-Button"
 import SocialLogin from "../User/Social-SignIn/Google-Login-Button"
+import Profile from "../User/Profile"
 //import formEmail from "../User/Email/Form-Email"
 
 const StyledContainer = styled(Container)(({ theme }) => ({
@@ -52,17 +52,14 @@ function App() {
               path="/"
               render={() => {
                 if (localStorage.isSocialLogin) {
-                  console.log("Social app.js");
-                  console.log(JSON.parse(localStorage.isSocialLogin));
+                  console.log("Social app.js")
+                  console.log(JSON.parse(localStorage.isSocialLogin))
                   return <Homepage newClassId={newClassId} />
-                }
-                else if(localStorage.isLogin)
-                {
-                  console.log("Login app.js");
-                  console.log(JSON.parse(localStorage.isLogin));
+                } else if (localStorage.isLogin) {
+                  console.log("Login app.js")
+                  console.log(JSON.parse(localStorage.isLogin))
                   return <Homepage newClassId={newClassId} />
-                }
-                else {
+                } else {
                   return <Redirect to="/sign-in" />
                 }
               }}
@@ -85,24 +82,30 @@ function App() {
             <Route exact path="/classes/*">
               <ClassDetails />
             </Route>
-            < Route exact path="/join/*"
+            <Route
+              exact
+              path="/join/*"
               render={() => {
                 if (localStorage.isSocialLogin) {
-                  console.log("Social join app.js");
-                  console.log(JSON.parse(localStorage.isSocialLogin));
+                  console.log("Social join app.js")
+                  console.log(JSON.parse(localStorage.isSocialLogin))
                   return <ClassJoin />
-                }
-                else if(localStorage.isLogin) {
-                  console.log("Login join app.js");
-                  console.log(JSON.parse(localStorage.isLogin));
+                } else if (localStorage.isLogin) {
+                  console.log("Login join app.js")
+                  console.log(JSON.parse(localStorage.isLogin))
                   return <ClassJoin />
-                }
-                else {
-                  localStorage.setItem('previousLocation',window.location.pathname)
+                } else {
+                  localStorage.setItem(
+                    "previousLocation",
+                    window.location.pathname
+                  )
                   return <Redirect to="/sign-in" />
                 }
               }}
             />
+            <Route exact path="/profile">
+              <Profile />
+            </Route>
           </Switch>
         </StyledContainer>
       </TabsProvider>
